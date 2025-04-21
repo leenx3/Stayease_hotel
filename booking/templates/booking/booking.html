@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <title>Boka Rum – StayEase</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://kit.fontawesome.com/f60f71d537.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<header>
+    <div class="logo">StayEase</div>
+    <nav>
+        <ul>
+            <i class="fa-solid fa-house" style="color:  #423428;"></i>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <i class="fa-solid fa-building-circle-check" style="color:  #423428;"></i>
+                <li><a href="{% url 'booking' %}">Booking</a></li>
+                <i class="fa-solid fa-images" style="color: #423428;"></i>
+                <li><a href="{% url 'gallery' %}">Gallery</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section class="room-selection-form">
+    <h1>Boka ett Rum</h1>
+    <form method="get" action="{% url 'room_search' %}">
+        <label for="guests">Antal gäster:</label>
+        <input type="number" id="guests" name="guests" min="1" required>
+
+        <label for="check_in_date">Incheckningsdatum:</label>
+        <input type="date" id="check_in_date" name="check_in" required>
+
+        <label for="check_out_date">Utcheckningsdatum:</label>
+        <input type="date" id="check_out_date" name="check_out" required>
+
+        <button type="submit">Sök rum</button>
+    </form>
+</section>
+
+<section class="room-types">
+    <h2>Våra Rum</h2>
+    <div class="room-types-section">
+        {% for room in rooms %}
+        <div class="room-type">
+            <h3><i class="fa-solid fa-star" style="color: #efde9f;"></i> {{ room.room_type }}</h3>
+            <p>Kapacitet: {{ room.capacity }} personer<br>Pris: {{ room.price }} kr/natt</p>
+
+            <a href="{% url 'booking_form' room.id %}?check_in={{ request.GET.check_in }}&check_out={{ request.GET.check_out }}&guests={{ request.GET.guests }}">
+                <button type="button">Boka</button>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+
+<section class="booking-info">
+    <h2>Information om Bokning</h2>
+    <p>Vi erbjuder rum för alla behov – från standard till lyxsviter. Välj rumstyp, fyll i detaljer och boka direkt.</p>
+</section>
+
+<section class="contact-info">
+    <h2>Kontakta Oss</h2>
+    <p>Behöver du hjälp? Hör av dig:</p>
+    <p>E-post: info@stayease.com</p>
+    <p>Telefon: +123 456 7890</p>
+</section>
+
+<footer>
+    <p>Kontakt: info@stayease.com | +123 456 7890</p>
+    <p>&copy; 2025 StayEase. Alla rättigheter förbehållna.</p>
+</footer>
+
+<script>
+    setInterval(function() {
+        window.location.reload();
+    }, 10000); // Refresh every  seconds
+</script>
+
+
+</body>
+</html>

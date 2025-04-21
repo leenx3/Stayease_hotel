@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/style3.css' %}">
+</head>
+<body>
+<h1>Admin Dashboard</h1>
+
+<h2>Totala intäkter: {{ income|default:"0" }} kr</h2>
+
+<h3>Bokningar:</h3>
+
+<table>
+    <thead>
+        <tr>
+            <th>Kund</th>
+            <th>Rum</th>
+            <th>Incheckning</th>
+            <th>Utcheckning</th>
+            <th>Totalpris</th>
+            <th>Åtgärder</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.customer.name }}</td>
+                <td>{{ booking.room.room_number }} - {{ booking.room.room_type }}</td>
+                <td>{{ booking.check_in_date }}</td>
+                <td>{{ booking.check_out_date }}</td>
+                <td>{{ booking.total_price }} kr</td>
+                <td>
+                    <a href="{% url 'edit_booking' booking.id %}">Redigera</a> |
+                    <a href="{% url 'delete_booking' booking.id %}" onclick="return confirm('Är du säker på att du vill ta bort denna bokning?');">Ta bort</a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="6">Inga bokningar ännu.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<br>
+<a href="{% url 'home' %}">← Tillbaka till startsidan</a>
+
+
+<script>
+    function fetchBookings() {
+        fetch("{% url 'get_latest_bookings' %}")
+            .then(response => response.json())
+            .then(data => {
+                const tbody = document.querySelector("tbody");
+                tbody.innerHTML = ""; 
+
+                if (data.bookings.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="6">Inga bokningar ännu.</td></tr>`;
+                    return;
+                }
+
+                data.bookings.forEach(booking => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${booking.customer__name}</td>
+                        <td>${booking.room__room_number} - ${booking.room__room_type}</td>
+                        <td>${booking.check_in_date}</td>
+                        <td>${booking.check_out_date}</td>
+                        <td>${booking.total_price} kr</td>
+                        <td>
+                            <a href="/edit-booking/${booking.id}">Redigera</a> |
+                            <a href="/delete-booking/${booking.id}" onclick="return confirm('Är du säker på att du vill ta bort denna bokning?');">Ta bort</a>
+                        </td>
+                    `;
+                    tbody.appendChild(row); 
+                });
+            });
+    }
+
+    
+    setInterval(fetchBookings, 3000);
+
+    
+    window.onload = fetchBookings;
+    
+</script>
+
+</body>
+</html>

@@ -1,0 +1,122 @@
+/* Confirmation  */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #405567;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Container */
+.container {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    background:#f8f1eb;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Headings */
+h1 {
+    font-size: 24px;
+    color: #405567;
+    margin-bottom: 20px;
+}
+
+/* Paragraph styling */
+p {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+/* Back to Home link */
+a {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 15px;
+    background-color: #405567;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background 0.3s ease;
+}
+
+a:hover {
+    background-color: #2a3e50;
+}
+/*style l booking form */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color:#759bbc;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: 50px auto;
+    background-color:bisque;
+    padding: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+h1 {
+    font-family:'Times New Roman', Times, serif;
+    font-style:italic;
+    color:#325580;
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 1em;
+    font-style: oblique;
+    margin-bottom: 5px;
+    color:#325580;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="date"] {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px initial #2a3e50;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+button {
+    padding: 12px;
+    background-color:#405567;
+    color:antiquewhite;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color:#2a3e50;
+}
+
+a {
+    display: inline-block;
+    margin-top: 20px;
+    color:antiquewhite;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

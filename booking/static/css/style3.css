@@ -1,0 +1,114 @@
+/* Basic Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color:bisque; 
+    color: #333333; 
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Headings */
+h1 {
+    color: #405567; /* Charcoal Blue */
+    border-bottom: 2px solid #405567;
+    padding-bottom: 10px;
+}
+
+h2 {
+    color: #2c3e50; /* Deep Navy */
+    margin-top: 30px;
+}
+
+/* Vertical Search Form */
+form {
+    background-color: #405567; /* Ivory Tint */
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+form label {
+    display: block;
+    margin: 15px 0 5px 0;
+    color: #272424; 
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+}
+
+form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #101010;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+form button {
+    display: block;
+    width: 100%;
+    background-color: #405567; 
+    color:antiquewhite;
+    border: solid;
+    padding: 12px;
+    margin-top: 20px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: bisque; 
+}
+
+/* Results List */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background-color: #405567; /* Pale Beige */
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+li:nth-child(odd) {
+    background-color: #405567; /* Ivory Tint for odd items */
+}
+
+li strong {
+    color: #2b231b; /* Charcoal Blue */
+}
+
+/* Booking Button */
+li button {
+    background-color: #333333; /* Charcoal Blue */
+    color: bisque;
+    border: solid;
+    padding: 8px 15px;
+    margin-top: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+li button:hover {
+    background-color: rgb(107, 97, 85); /* Deep Navy */
+}
+
+/* Back Link */
+body > a {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 15px;
+    background-color: #405567; /* Charcoal Blue */
+    color: rgb(48, 37, 29);
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+body > a:hover {
+    background-color:#5d7a93; /* Deep Navy */
+}
