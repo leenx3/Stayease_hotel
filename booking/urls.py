@@ -5,6 +5,7 @@ from .views import get_latest_bookings
 urlpatterns = [
     path('', views.home, name='home'),
     path('booking/', views.booking, name='booking'),
+    path('book/<int:room_id>/', views.booking_form, name='booking_form'),  # ✅ Added
     path('submit_booking/', views.submit_booking, name='submit_booking'),
     path('confirmation/<int:booking_id>/', views.booking_confirmation, name='booking_confirmation'),
     path('gallery/', views.gallery, name='gallery'),

@@ -23,14 +23,10 @@
         <label for="email">E-postadress:</label>
         <input type="email" name="email" id="email" required value="{{ prefill.email|default:'' }}">
 
-        <label for="room_type">Rumstyp:</label>
-        <select name="room_type" id="room_type" required>
-            <option value="">-- Välj rumstyp --</option>
-            <option value="Executive Suite" {% if prefill.room_type == "Executive Suite" %}selected{% endif %}>Executive Suite</option>
-            <option value="Deluxe" {% if prefill.room_type == "Deluxe" %}selected{% endif %}>Deluxe</option>
-            <option value="Standard" {% if prefill.room_type == "Standard" %}selected{% endif %}>Standard</option>
-            <option value="Family Suite" {% if prefill.room_type == "Family Suite" %}selected{% endif %}>Family Suite</option>
-        </select>
+        <!-- Display room type as text, pass it as hidden input -->
+        <label>Rumstyp:</label>
+        <p><strong>{{ prefill.room_type }}</strong></p>
+        <input type="hidden" name="room_type" value="{{ prefill.room_type }}">
 
         <label for="guests">Antal gäster:</label>
         <input type="number" name="guests" id="guests" min="1" value="{{ prefill.guests|default:'1' }}" required>

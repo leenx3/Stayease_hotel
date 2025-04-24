@@ -13,12 +13,9 @@
     <div class="logo">StayEase</div>
     <nav>
         <ul>
-            <i class="fa-solid fa-house" style="color:  #423428;"></i>
-            <li><a href="{% url 'home' %}">Home</a></li>
-            <i class="fa-solid fa-building-circle-check" style="color:  #423428;"></i>
-            <li><a href="{% url 'booking' %}">Booking</a></li>
-            <i class="fa-solid fa-images" style="color: #423428;"></i>
-            <li><a href="{% url 'gallery' %}">Gallery</a></li>
+            <li><i class="fa-solid fa-house" style="color: #423428;"></i> <a href="{% url 'home' %}">Home</a></li>
+            <li><i class="fa-solid fa-building-circle-check" style="color: #423428;"></i> <a href="{% url 'booking' %}">Booking</a></li>
+            <li><i class="fa-solid fa-images" style="color: #423428;"></i> <a href="{% url 'gallery' %}">Gallery</a></li>
         </ul>
     </nav>
 </header>
@@ -27,13 +24,13 @@
     <h1>Boka ett Rum</h1>
     <form method="get" action="{% url 'room_search' %}">
         <label for="guests">Antal gäster:</label>
-        <input type="number" id="guests" name="guests" min="1" required value="{{ request.GET.guests }}">
+        <input type="number" id="guests" name="guests" min="1" required value="{{ prefill.guests|default:'' }}">
 
         <label for="check_in_date">Incheckningsdatum:</label>
-        <input type="date" id="check_in_date" name="check_in" required value="{{ request.GET.check_in }}">
+        <input type="date" id="check_in_date" name="check_in" required value="{{ prefill.check_in_date|default:'' }}">
 
         <label for="check_out_date">Utcheckningsdatum:</label>
-        <input type="date" id="check_out_date" name="check_out" required value="{{ request.GET.check_out }}">
+        <input type="date" id="check_out_date" name="check_out" required value="{{ prefill.check_out_date|default:'' }}">
 
         <button type="submit">Sök rum</button>
     </form>
@@ -46,13 +43,10 @@
         <div class="room-type">
             <h3><i class="fa-solid fa-star" style="color: #efde9f;"></i> {{ room.room_type }}</h3>
             <p>Kapacitet: {{ room.capacity }} personer<br>Pris: {{ room.price }} kr/natt</p>
-
-            <a href="{% url 'booking_form' room.id %}?check_in={{ request.GET.check_in }}&check_out={{ request.GET.check_out }}&guests={{ request.GET.guests }}">
+            <a href="{% url 'booking_form' room.id %}?check_in={{ prefill.check_in_date }}&check_out={{ prefill.check_out_date }}&guests={{ prefill.guests }}">
                 <button type="button">Boka</button>
             </a>
         </div>
-        {% empty %}
-        <p>❌ Inga rum tillgängliga just nu. Vänligen ändra dina filter.</p>
         {% endfor %}
     </div>
 </section>

@@ -12,12 +12,9 @@
     <div class="logo">StayEase</div>
     <nav>
         <ul>
-            <i class="fa-solid fa-house" style="color:  #423428;"></i>
-                <li><a href="{% url 'home' %}">Home</a></li>
-                <i class="fa-solid fa-building-circle-check" style="color:  #423428;"></i>
-                <li><a href="{% url 'booking' %}">Booking</a></li>
-                <i class="fa-solid fa-images" style="color: #423428;"></i>
-                <li><a href="{% url 'gallery' %}">Gallery</a></li>
+            <li><i class="fa-solid fa-house" style="color:  #423428;"></i> <a href="{% url 'home' %}">Home</a></li>
+            <li><i class="fa-solid fa-building-circle-check" style="color:  #423428;"></i> <a href="{% url 'booking' %}">Booking</a></li>
+            <li><i class="fa-solid fa-images" style="color: #423428;"></i> <a href="{% url 'gallery' %}">Gallery</a></li>
         </ul>
     </nav>
 </header>
@@ -30,8 +27,9 @@
     </div>
 </section>
 
+<!-- Updated booking form that redirects to booking page with filters -->
 <section class="booking-widget">
-    <form method="get" action="{% url 'room_search' %}">
+    <form method="get" action="{% url 'booking' %}">
         <label for="check_in">Incheckning:</label>
         <input type="date" id="check_in" name="check_in" required>
 
@@ -90,7 +88,7 @@
 </section>
 
 <section class="cta-buttons">
-    <button onclick="location.href='{% url 'room_search' %}'">Sök & Filtrera Rum</button>
+    <!-- Removed: Sök & Filtrera Rum button -->
     <button onclick="location.href='{% url 'admin_dashboard' %}'">Adminpanel</button>
 </section>
 
