@@ -1,4 +1,4 @@
-/* Hero section styling */
+
 .hero {
     width: 100%;
     max-width: 1200px;
@@ -6,7 +6,7 @@
     text-align: center;
 }
 
-/* Hero image styling */
+
 .hero img {
     width: 100%;
     height: 400px;
@@ -16,7 +16,7 @@
     margin-top: 15px;
 }
 
-/* Hero text container */
+
 .hero-text {
     border-style: dotted;
     border-color: #423428;
@@ -29,14 +29,14 @@
     margin-top: 15px;
 }
 
-/* Hero heading */
+
 .hero-text h1 {
     font-size: 2.5rem;
     margin: 0;
     color: #333;
 }
 
-/* Hero paragraph */
+
 .hero-text p {
     font-size: 1.2rem;
     margin: 10px 0 0;
@@ -422,13 +422,13 @@ input:focus {
 }
 .room-type {
     display: flex;
-    flex-direction: column; /* Stack items vertically */
-    align-items: center; /* Center items horizontally */
-    text-align: center; /* Ensure text is also centered */
+    flex-direction: column; 
+    align-items: center; 
+    text-align: center;
 }
 
 .room-type button {
-    background: #405567; /* Elegant dark blue */
+    background: #405567; 
     color: white;
     font-size: 1.2em;
     font-weight: bold;
@@ -443,16 +443,16 @@ input:focus {
 
 
 .room-type button:hover {
-    background: #2c3e50; /* Darker blue on hover */
-    transform: scale(1.05); /* Slight zoom effect */
+    background: #2c3e50; 
+    transform: scale(1.05); 
 }
 
 .room-type button:active {
-    background: #1a252f; /* Even darker on click */
-    transform: scale(0.98); /* Slight press effect */
+    background: #1a252f; 
+    transform: scale(0.98); 
 }
 .booking-info {
-    background: #ede1d1; /* Light gray background for a soft look */
+    background: #ede1d1; 
     padding: 30px;
     border-radius: 10px;
     text-align: center;
@@ -494,15 +494,15 @@ input:focus {
 }
 .room-type h3 {
     
-    display: inline-flex; /* Aligns text and icon in one line */
-    align-items: center; /* Centers them vertically */
+    display: inline-flex; 
+    align-items: center; 
     font-size: 1.5em;
     color: #405567;
 }
 
 .room-type i {
-    font-size: 1.2em; /* Adjust icon size */
-    margin-right: 8px; /* Adds space between the icon and text */
+    font-size: 1.2em; 
+    margin-right: 8px; 
 }
 
 .gallery {
@@ -524,12 +524,11 @@ input:focus {
 
 .carousel {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Two items per row */
+    grid-template-columns: repeat(2, 1fr); 
     gap: 20px;
     justify-content: center;
-    max-width: 800px; /* Adjust width */
-    margin: 0 auto; /* Center the gallery */
-}
+    max-width: 800px; 
+    margin: 0 auto; 
 
 .carousel-item {
     background: white;
@@ -551,22 +550,21 @@ input:focus {
     color: #444;
 }
 
-/* Make it single column on small screens */
+
 @media (max-width: 600px) {
     .carousel {
         grid-template-columns: 1fr;
     }
 }
 
-/* General styling for amenities section */
 .amenities {
     padding: 10px;
     background-color: #f4f4f4;
-    text-align: center; /* Center the content */
+    text-align: center; 
     background-clip: content-box;
 }
 
-/* Title for the section */
+
 .amenities h2 {
     border-top: dotted #2a221d;
     font-size: 2.5em;
@@ -579,28 +577,28 @@ input:focus {
     margin-right: auto;
 }
 
-/* Description paragraph */
+
 .amenities p {
     font-size: 1.2em;
     color: #2a221d;
     margin-bottom: 30px;
 }
 
-/* Container for images */
+
 .amenities img {
-    width: 150px; /* Set a consistent size for all images */
+    width: 150px; 
     height: 150px; 
-    object-fit: cover; /* Ensures the image covers the area without distortion */
-    margin: 10px; /* Adds space between images */
-    border-radius: 10px; /* Adds rounded corners */
+    object-fit: cover; 
+    margin: 10px; 
+    border-radius: 10px; 
 }
 
-/* Flexbox layout for images to appear in one row */
+
 .amenities img {
     display: inline-block;
 }
 
-/* Styling for the list of amenities */
+
 .amenities ul {
     list-style-type: none;
     padding: 0;
@@ -609,7 +607,7 @@ input:focus {
     margin-top: 30px;
 }
 
-/* Styling for each list item */
+
 .amenities li {
     margin-bottom: 15px;
     font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
@@ -617,81 +615,81 @@ input:focus {
     font-weight: bold;
 }
 
-/* Responsive design: Stack images on smaller screens */
+
 @media (max-width: 768px) {
     .amenities img {
-        width: 100px; /* Smaller image size for mobile */
+        width: 100px; 
         height: 100px;
     }
     .amenities ul {
         text-align: left;
     }
 }
-/* Styling for the attractions section */
+
 .attractions {
-    padding: 20px;  /* Add padding to space out content */
-    text-align: center;  /* Center the text */
-    color: #2a221d;  /* Text color */
+    padding: 20px;  
+    text-align: center;  
+    color: #2a221d;  
     background-color: white;
     background-clip: content-box;
 }
 
-/* Styling for the attractions title */
+
 .attractions h2 {
     border: dotted #2a221d;
-    font-size: 2.5em;  /* Larger font for the title */
-    color: #405567;  /* Set color for the title */
-    margin-bottom: 15px;  /* Space below the title */
+    font-size: 2.5em;  
+    color: #405567;  
+    margin-bottom: 15px;  
     background-color: #ede1d1;
 }
 
-/* Styling for the description paragraph */
+
 .attractions p {
-    font-size: 1.1em;  /* Slightly larger text for description */
-    margin-bottom: 20px;  /* Space below the paragraph */
+    font-size: 1.1em;  
+    margin-bottom: 20px;  
     background-color: white;
 }
 
-/* Styling for the list of attractions */
+
 .attractions ul {
-    list-style-type: none;  /* Remove the default bullet points */
-    padding: 0;  /* Remove default padding */
-    font-size: 1.2em;  /* Set font size */
+    list-style-type: none; 
+    padding: 0;  
+    font-size: 1.2em;  
     background-color: white;
 }
 
-/* Styling for each list item in attractions */
+
 .attractions li {
-    margin-bottom: 10px;  /* Space between list items */
-    font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;  /* Font styling */
-    color: #2a221d;  /* Set text color */
+    margin-bottom: 10px; 
+    font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;  
+    color: #2a221d; 
 }
 
-/* Styling for the footer */
+
 footer {
-    padding: 20px;  /* Add padding to the footer */
-    text-align: center;  /* Center the text */
-    background-color: #f4f4f4;  /* Light background color */
-    color: #333;  /* Dark text color */
+    padding: 20px;  
+    text-align: center;  
+    background-color: #f4f4f4;  
+    color: #333;  
 }
 
 footer p {
-    font-size: 1em;  /* Set font size for text */
-    margin: 5px 0;  /* Space between paragraphs */
+    font-size: 1em;  
+    margin: 5px 0;  
 }
 
-/* Admin Table Styling */
+
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    text-align: center; /* Centrera text i tabellen */
+    text-align: center; 
 }
 
 th, td {
     padding: 15px;
     border: 1px solid #ccc;
-    text-align: center; /* Centrera text i tabellen */
+    text-align: center; 
 }
 
 th {
@@ -713,13 +711,13 @@ a:hover {
     color: #0066cc;
 }
 
-/* Centrera text i allmänhet */
+
 body {
     text-align: center;
     font-family: Arial, sans-serif;
 }
 
-/* Formulär och inmatningsfält */
+
 input[type="text"], input[type="email"], input[type="number"], input[type="date"] {
     padding: 10px;
     margin: 10px;
