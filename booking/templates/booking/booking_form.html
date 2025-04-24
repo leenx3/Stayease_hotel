@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <title>Boka Rum {{ room.room_number }}</title>
     <link rel="stylesheet" href="{% static 'css/style2.css' %}">
-    
 </head>
 <body>
 <div class="container">
@@ -30,5 +29,30 @@
     </form>
     <a href="{% url 'room_search' %}">← Tillbaka till rumssökning</a>
 </div>
+
+<script>
+    const form = document.querySelector("form");
+    const checkInInput = document.getElementById("check_in_date");
+    const checkOutInput = document.getElementById("check_out_date");
+
+    // Create and insert an error message element
+    const errorMessage = document.createElement("p");
+    errorMessage.style.color = "red";
+    errorMessage.style.marginTop = "10px";
+    errorMessage.style.fontWeight = "bold";
+    form.appendChild(errorMessage);
+
+    form.addEventListener("submit", function(event) {
+        const checkIn = new Date(checkInInput.value);
+        const checkOut = new Date(checkOutInput.value);
+
+        if (checkOut <= checkIn) {
+            errorMessage.textContent = "❌ Utcheckningsdatum måste vara efter incheckningsdatum.";
+            event.preventDefault(); // prevent form submission
+        } else {
+            errorMessage.textContent = ""; // clear the message if valid
+        }
+    });
+</script>
 </body>
 </html>

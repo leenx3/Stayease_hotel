@@ -12,10 +12,10 @@
 <form method="post">
     {% csrf_token %}
     <label for="check_in_date">Incheckningsdatum:</label>
-    <input type="date" name="check_in_date" value="{{ booking.check_in_date }}" required>
+    <input type="date" name="check_in_date" id="check_in_date" value="{{ booking.check_in_date }}" required>
 
     <label for="check_out_date">Utcheckningsdatum:</label>
-    <input type="date" name="check_out_date" value="{{ booking.check_out_date }}" required>
+    <input type="date" name="check_out_date" id="check_out_date" value="{{ booking.check_out_date }}" required>
 
     <label for="total_price">Totalt pris:</label>
     <input type="number" step="0.01" name="total_price" value="{{ booking.total_price }}" required>
@@ -25,5 +25,29 @@
 
 <a href="{% url 'admin_dashboard' %}">← Tillbaka till admin-dashboard</a>
 
+<script>
+    const form = document.querySelector("form");
+    const checkInInput = document.getElementById("check_in_date");
+    const checkOutInput = document.getElementById("check_out_date");
+
+    // Create and insert an error message element
+    const errorMessage = document.createElement("p");
+    errorMessage.style.color = "red";
+    errorMessage.style.marginTop = "10px";
+    errorMessage.style.fontWeight = "bold";
+    form.appendChild(errorMessage);
+
+    form.addEventListener("submit", function(event) {
+        const checkIn = new Date(checkInInput.value);
+        const checkOut = new Date(checkOutInput.value);
+
+        if (checkOut <= checkIn) {
+            errorMessage.textContent = "❌ Utcheckningsdatum måste vara efter incheckningsdatum.";
+            event.preventDefault(); // prevent form submission
+        } else {
+            errorMessage.textContent = ""; // clear the message if valid
+        }
+    });
+</script>
 </body>
 </html>
