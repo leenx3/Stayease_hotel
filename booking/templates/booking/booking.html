@@ -14,11 +14,11 @@
     <nav>
         <ul>
             <i class="fa-solid fa-house" style="color:  #423428;"></i>
-                <li><a href="{% url 'home' %}">Home</a></li>
-                <i class="fa-solid fa-building-circle-check" style="color:  #423428;"></i>
-                <li><a href="{% url 'booking' %}">Booking</a></li>
-                <i class="fa-solid fa-images" style="color: #423428;"></i>
-                <li><a href="{% url 'gallery' %}">Gallery</a></li>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <i class="fa-solid fa-building-circle-check" style="color:  #423428;"></i>
+            <li><a href="{% url 'booking' %}">Booking</a></li>
+            <i class="fa-solid fa-images" style="color: #423428;"></i>
+            <li><a href="{% url 'gallery' %}">Gallery</a></li>
         </ul>
     </nav>
 </header>
@@ -27,13 +27,13 @@
     <h1>Boka ett Rum</h1>
     <form method="get" action="{% url 'room_search' %}">
         <label for="guests">Antal gäster:</label>
-        <input type="number" id="guests" name="guests" min="1" required>
+        <input type="number" id="guests" name="guests" min="1" required value="{{ request.GET.guests }}">
 
         <label for="check_in_date">Incheckningsdatum:</label>
-        <input type="date" id="check_in_date" name="check_in" required>
+        <input type="date" id="check_in_date" name="check_in" required value="{{ request.GET.check_in }}">
 
         <label for="check_out_date">Utcheckningsdatum:</label>
-        <input type="date" id="check_out_date" name="check_out" required>
+        <input type="date" id="check_out_date" name="check_out" required value="{{ request.GET.check_out }}">
 
         <button type="submit">Sök rum</button>
     </form>
@@ -51,10 +51,11 @@
                 <button type="button">Boka</button>
             </a>
         </div>
+        {% empty %}
+        <p>❌ Inga rum tillgängliga just nu. Vänligen ändra dina filter.</p>
         {% endfor %}
     </div>
 </section>
-
 
 <section class="booking-info">
     <h2>Information om Bokning</h2>
@@ -72,13 +73,6 @@
     <p>Kontakt: info@stayease.com | +123 456 7890</p>
     <p>&copy; 2025 StayEase. Alla rättigheter förbehållna.</p>
 </footer>
-
-<script>
-    setInterval(function() {
-        window.location.reload();
-    }, 10000); 
-</script>
-
 
 </body>
 </html>

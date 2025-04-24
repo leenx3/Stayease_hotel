@@ -1,11 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
+from datetime import datetime
 from django.db.models import Sum
 from .models import Room, Customer, Booking
-from datetime import datetime
-from django.http import JsonResponse
-from django.shortcuts import render
-from .models import Booking, Room
+
 
 def home(request):
     rooms = Room.objects.filter(is_available=True)
@@ -13,61 +11,85 @@ def home(request):
 
 
 def booking(request):
-    rooms = Room.objects.filter(is_available=True)
-    return render(request, 'booking/booking.html', {'rooms': rooms})
+    return render(request, 'booking/booking_form.html')
 
 
-def booking_form(request, room_id):
-    room = get_object_or_404(Room, id=room_id)
-    return render(request, 'booking/booking_form.html', {'room': room})
+def get_available_room(room_type, check_in, check_out):
+    rooms = Room.objects.filter(room_type=room_type)
+    for room in rooms:
+        overlapping = Booking.objects.filter(
+            room=room,
+            check_in_date__lt=check_out,
+            check_out_date__gt=check_in
+        )
+        if not overlapping.exists():
+            return room
+    return None
+
 
 def submit_booking(request):
-    """
-    Process the booking form submission.
-    """
     if request.method == "POST":
         name = request.POST.get('name')
         email = request.POST.get('email')
-        room_id = request.POST.get('room_id')
+        room_type = request.POST.get('room_type')
         check_in = request.POST.get('check_in_date')
         check_out = request.POST.get('check_out_date')
 
-   
         try:
             guests = int(request.POST.get('guests') or 1)
         except ValueError:
             guests = 1
 
-       
-        if not name or not email:
-            return HttpResponse("Namn och e-post krävs.", status=400)
+        # Return with form filled if missing required fields
+        if not name or not email or not room_type:
+            return render(request, 'booking/booking_form.html', {
+                "error": "Namn, e-post och rumstyp krävs.",
+                "prefill": request.POST
+            })
 
-       
-        room = get_object_or_404(Room, id=room_id)
+        # Convert dates safely
+        try:
+            check_in_date = datetime.strptime(check_in, "%Y-%m-%d").date()
+            check_out_date = datetime.strptime(check_out, "%Y-%m-%d").date()
+        except ValueError:
+            return render(request, 'booking/booking_form.html', {
+                "error": "Felaktigt datumformat.",
+                "prefill": request.POST
+            })
 
-      
+        # Validate date order
+        if check_out_date <= check_in_date:
+            return render(request, 'booking/booking_form.html', {
+                "error": "❌ Utcheckningsdatum måste vara efter incheckningsdatum.",
+                "prefill": request.POST
+            })
+
+        # Find available room
+        room = get_available_room(room_type, check_in_date, check_out_date)
+        if not room:
+            return render(request, 'booking/booking_form.html', {
+                "error": "❌ Alla rum av denna typ är upptagna för valda datum.",
+                "prefill": request.POST
+            })
+
+        # Create or update customer
         customer, created = Customer.objects.get_or_create(email=email)
         if created or not customer.name:
             customer.name = name
             customer.save()
 
-    
-        nights = (datetime.strptime(check_out, "%Y-%m-%d") - datetime.strptime(check_in, "%Y-%m-%d")).days
+        # Calculate price and save booking
+        nights = (check_out_date - check_in_date).days
         total_price = room.price * nights
 
-  
         booking = Booking.objects.create(
             customer=customer,
             room=room,
-            check_in_date=check_in,
-            check_out_date=check_out,
+            check_in_date=check_in_date,
+            check_out_date=check_out_date,
             total_price=total_price,
             guests=guests
         )
-
-     
-        room.is_available = False
-        room.save()
 
         return redirect('booking_confirmation', booking_id=booking.id)
 
@@ -91,6 +113,7 @@ def admin_dashboard(request):
         'income': income
     })
 
+
 def edit_booking(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id)
 
@@ -104,18 +127,13 @@ def edit_booking(request, booking_id):
     return render(request, 'booking/edit_booking.html', {'booking': booking})
 
 
-from django.shortcuts import get_object_or_404, redirect
-from .models import Booking, Room
-
 def delete_booking(request, booking_id):
-    
     booking = get_object_or_404(Booking, id=booking_id)
     room = booking.room
     room.is_available = True
     room.save()
     booking.delete()
     return redirect('admin_dashboard')
-
 
 
 def room_search(request):
@@ -167,13 +185,10 @@ def room_search(request):
 
     return render(request, 'booking/room_search.html', {'rooms': rooms})
 
+
 def get_latest_bookings(request):
-    """
-    Returns the latest bookings in JSON format.
-    """
     bookings = Booking.objects.all().values(
-        'id', 'customer__name', 'room__room_number', 'room__room_type', 'check_in_date', 'check_out_date', 'total_price'
+        'id', 'customer__name', 'room__room_number', 'room__room_type',
+        'check_in_date', 'check_out_date', 'total_price'
     )
-    bookings_list = list(bookings)  # Convert queryset to list of dicts (for JSON response)
-    
-    return JsonResponse({'bookings': bookings_list})
+    return JsonResponse({'bookings': list(bookings)})

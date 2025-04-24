@@ -3,30 +3,47 @@
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
-    <title>Boka Rum {{ room.room_number }}</title>
+    <title>Boka Rum – StayEase</title>
     <link rel="stylesheet" href="{% static 'css/style2.css' %}">
 </head>
 <body>
 <div class="container">
-    <h1>Boka Rum {{ room.room_number }} ({{ room.room_type }})</h1>
+    <h1>Boka ett Rum</h1>
+
+    {% if error and request.method == 'POST' %}
+        <p style="color:red; font-weight:bold;">{{ error }}</p>
+    {% endif %}
+
     <form method="post" action="{% url 'submit_booking' %}">
         {% csrf_token %}
-        <input type="hidden" name="room_id" value="{{ room.id }}">
 
         <label for="name">Ditt namn:</label>
-        <input type="text" name="name" id="name" required>
+        <input type="text" name="name" id="name" required value="{{ prefill.name|default:'' }}">
 
         <label for="email">E-postadress:</label>
-        <input type="email" name="email" id="email" required>
+        <input type="email" name="email" id="email" required value="{{ prefill.email|default:'' }}">
+
+        <label for="room_type">Rumstyp:</label>
+        <select name="room_type" id="room_type" required>
+            <option value="">-- Välj rumstyp --</option>
+            <option value="Executive Suite" {% if prefill.room_type == "Executive Suite" %}selected{% endif %}>Executive Suite</option>
+            <option value="Deluxe" {% if prefill.room_type == "Deluxe" %}selected{% endif %}>Deluxe</option>
+            <option value="Standard" {% if prefill.room_type == "Standard" %}selected{% endif %}>Standard</option>
+            <option value="Family Suite" {% if prefill.room_type == "Family Suite" %}selected{% endif %}>Family Suite</option>
+        </select>
+
+        <label for="guests">Antal gäster:</label>
+        <input type="number" name="guests" id="guests" min="1" value="{{ prefill.guests|default:'1' }}" required>
 
         <label for="check_in_date">Incheckningsdatum:</label>
-        <input type="date" name="check_in_date" id="check_in_date" required>
+        <input type="date" name="check_in_date" id="check_in_date" required value="{{ prefill.check_in_date|default:'' }}">
 
         <label for="check_out_date">Utcheckningsdatum:</label>
-        <input type="date" name="check_out_date" id="check_out_date" required>
+        <input type="date" name="check_out_date" id="check_out_date" required value="{{ prefill.check_out_date|default:'' }}">
 
         <button type="submit">Bekräfta Bokning</button>
     </form>
+
     <a href="{% url 'room_search' %}">← Tillbaka till rumssökning</a>
 </div>
 
@@ -35,7 +52,6 @@
     const checkInInput = document.getElementById("check_in_date");
     const checkOutInput = document.getElementById("check_out_date");
 
-    // Create and insert an error message element
     const errorMessage = document.createElement("p");
     errorMessage.style.color = "red";
     errorMessage.style.marginTop = "10px";
@@ -48,9 +64,9 @@
 
         if (checkOut <= checkIn) {
             errorMessage.textContent = "❌ Utcheckningsdatum måste vara efter incheckningsdatum.";
-            event.preventDefault(); // prevent form submission
+            event.preventDefault();
         } else {
-            errorMessage.textContent = ""; // clear the message if valid
+            errorMessage.textContent = "";
         }
     });
 </script>
