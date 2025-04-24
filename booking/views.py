@@ -6,17 +6,17 @@ from datetime import datetime
 from django.http import JsonResponse
 from django.shortcuts import render
 from .models import Booking, Room
-# Home - Visa alla tillgängliga rum
+
 def home(request):
     rooms = Room.objects.filter(is_available=True)
     return render(request, 'booking/home.html', {'rooms': rooms})
 
-# Booking - Visa bokningssidan med alla tillgängliga rum
+
 def booking(request):
     rooms = Room.objects.filter(is_available=True)
     return render(request, 'booking/booking.html', {'rooms': rooms})
 
-# Booking form - Visa bokningsformuläret för ett valt rum
+
 def booking_form(request, room_id):
     room = get_object_or_404(Room, id=room_id)
     return render(request, 'booking/booking_form.html', {'room': room})
@@ -32,30 +32,30 @@ def submit_booking(request):
         check_in = request.POST.get('check_in_date')
         check_out = request.POST.get('check_out_date')
 
-        # Hantera gästantal robust
+   
         try:
             guests = int(request.POST.get('guests') or 1)
         except ValueError:
             guests = 1
 
-        # Validera namn & e-post
+       
         if not name or not email:
             return HttpResponse("Namn och e-post krävs.", status=400)
 
-        # Hämta rum
+       
         room = get_object_or_404(Room, id=room_id)
 
-        # Hämta eller skapa kund
+      
         customer, created = Customer.objects.get_or_create(email=email)
         if created or not customer.name:
             customer.name = name
             customer.save()
 
-        # Beräkna totalpris
+    
         nights = (datetime.strptime(check_out, "%Y-%m-%d") - datetime.strptime(check_in, "%Y-%m-%d")).days
         total_price = room.price * nights
 
-        # Skapa bokning
+  
         booking = Booking.objects.create(
             customer=customer,
             room=room,
@@ -65,7 +65,7 @@ def submit_booking(request):
             guests=guests
         )
 
-        # Markera rummet som otillgängligt
+     
         room.is_available = False
         room.save()
 
@@ -73,16 +73,16 @@ def submit_booking(request):
 
     return redirect('home')
 
-# Booking confirmation
+
 def booking_confirmation(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id)
     return render(request, 'booking/confirmation.html', {'booking': booking})
 
-# Gallery
+
 def gallery(request):
     return render(request, 'booking/gallery.html')
 
-# Admin dashboard
+
 def admin_dashboard(request):
     bookings = Booking.objects.all()
     income = bookings.aggregate(Sum('total_price'))['total_price__sum'] or 0
@@ -91,7 +91,6 @@ def admin_dashboard(request):
         'income': income
     })
 
-# Edit booking
 def edit_booking(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id)
 
@@ -104,7 +103,7 @@ def edit_booking(request, booking_id):
 
     return render(request, 'booking/edit_booking.html', {'booking': booking})
 
-# Delete booking
+
 from django.shortcuts import get_object_or_404, redirect
 from .models import Booking, Room
 
@@ -118,7 +117,7 @@ def delete_booking(request, booking_id):
     return redirect('admin_dashboard')
 
 
-# Room search
+
 def room_search(request):
     rooms = Room.objects.filter(is_available=True)
 
