@@ -529,6 +529,7 @@ input:focus {
     justify-content: center;
     max-width: 800px; 
     margin: 0 auto; 
+}
 
 .carousel-item {
     background: white;
